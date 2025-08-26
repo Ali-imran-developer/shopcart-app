@@ -1,75 +1,190 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+// app/(tabs)/index.tsx
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from "react-native";
+import { LineChart, BarChart } from "react-native-chart-kit";
+import { useAuth } from "@/hooks/useAuth";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const screenWidth = Dimensions.get("window").width;
+const Dashboard = () => {
 
-export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView style={styles.container}>
+
+      {/* Page Title */}
+      <Text style={styles.title}>Dashboard</Text>
+
+      {/* Top Cards */}
+      <View style={styles.cardsRow}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Orders</Text>
+          <Text style={styles.cardValue}>1,245</Text>
+        </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Sales</Text>
+          <Text style={styles.cardValue}>$23,400</Text>
+        </View>
+      </View>
+
+      <View style={styles.cardsRow}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Customers</Text>
+          <Text style={styles.cardValue}>530</Text>
+        </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Revenue</Text>
+          <Text style={styles.cardValue}>$12,800</Text>
+        </View>
+      </View>
+
+      {/* Today Orders Graph */}
+      <Text style={styles.sectionTitle}>Today's Orders</Text>
+      <LineChart
+        data={{
+          labels: ["9AM", "12PM", "3PM", "6PM", "9PM"],
+          datasets: [
+            {
+              data: [20, 45, 28, 80, 99],
+            },
+          ],
+        }}
+        width={screenWidth - 20}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#fff",
+          backgroundGradientFrom: "#fff",
+          backgroundGradientTo: "#fff",
+          decimalPlaces: 0,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        }}
+        bezier
+        style={styles.chart}
+      />
+
+      {/* Top Products Table */}
+      <Text style={styles.sectionTitle}>Top Products</Text>
+      <View style={styles.table}>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableHeader}>Product</Text>
+          <Text style={styles.tableHeader}>Sales</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>iPhone 15</Text>
+          <Text style={styles.tableCell}>320</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>Macbook Pro</Text>
+          <Text style={styles.tableCell}>210</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>AirPods</Text>
+          <Text style={styles.tableCell}>180</Text>
+        </View>
+      </View>
+
+      {/* Top Cities Graph */}
+      <Text style={styles.sectionTitle}>Top Cities</Text>
+      <BarChart
+        data={{
+          labels: ["NY", "LA", "Chicago", "Houston", "Miami"],
+          datasets: [
+            {
+              data: [300, 250, 200, 180, 150],
+            },
+          ],
+        }}
+        width={screenWidth - 20}
+        height={220}
+        chartConfig={{
+          backgroundColor: "#fff",
+          backgroundGradientFrom: "#fff",
+          backgroundGradientTo: "#fff",
+          decimalPlaces: 0,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        }}
+        style={styles.chart} yAxisLabel={""} yAxisSuffix={""}      />
+    </ScrollView>
   );
-}
+};
+
+export default Dashboard;
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 10,
   },
-  stepContainer: {
-    gap: 8,
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#000",
+    marginVertical: 15,
+  },
+  cardsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+  card: {
+    backgroundColor: "#f9f9f9",
+    flex: 1,
+    marginHorizontal: 5,
+    padding: 20,
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  cardTitle: {
+    fontSize: 16,
+    color: "#555",
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  cardValue: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginVertical: 15,
+    color: "#000",
+  },
+  chart: {
+    borderRadius: 12,
+    marginVertical: 8,
+  },
+  table: {
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+  },
+  tableRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 6,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#ddd",
+  },
+  tableHeader: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  tableCell: {
+    fontSize: 15,
+    color: "#333",
   },
 });

@@ -1,0 +1,31 @@
+import { apiRequest } from "../apiRequest";
+
+class AuthControllers {
+  static loginApi = (data: { email: string; password: string }) => {
+    return apiRequest("post", "/api/login", data);
+  };
+
+  static signupApi = (data: {
+    userName: string;
+    email: string;
+    password: string;
+  }) => {
+    return apiRequest("post", "/api/register", data);
+  };
+
+  static forgetPasswordApi = (data: { email: string }) => {
+    return apiRequest("post", "/auth/forget-password", data);
+  };
+
+  static updateProfile = (id: string, data: {
+    address?: string;
+    email?: string;
+    image?: string;
+    name?: string;
+    phoneNumber?: string;
+  }) => {
+    return apiRequest("put", `/api/update/${id}`, data);
+  };
+}
+
+export default AuthControllers;
