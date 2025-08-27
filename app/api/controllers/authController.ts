@@ -17,14 +17,14 @@ class AuthControllers {
     return apiRequest("post", "/auth/forget-password", data);
   };
 
-  static updateProfile = (id: string, data: {
+  static updateProfile = (data: {
     address?: string;
     email?: string;
-    image?: string;
+    image: string | null;
     name?: string;
     phoneNumber?: string;
   }) => {
-    return apiRequest("put", `/api/update/${id}`, data);
+    return apiRequest("put", "/api/update", data);
   };
 }
 

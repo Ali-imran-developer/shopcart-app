@@ -9,7 +9,7 @@ type ForgetPasswordData = { email: string };
 type UpdateProfileData = {
   address?: string;
   email?: string;
-  image?: string;
+  image: string | null;
   name?: string;
   phoneNumber?: string;
 };
@@ -72,15 +72,15 @@ export function useAuth() {
     }
   };
 
-  const handleUpdateUser = async (id: string, data: UpdateProfileData) => {
+  const handleUpdateUser = async (data: UpdateProfileData) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await AuthControllers.updateProfile(id, data);
+      const res = await AuthControllers.updateProfile(data);
       Toast.show({ type: "success", text1: res.message });
       return res;
     } catch (err: any) {
-      setError(err.message || "Request failed");
+      Toast.show({ type: "error", text1: err.message });
       throw err;
     } finally {
       setLoading(false);
