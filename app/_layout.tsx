@@ -19,9 +19,9 @@ export default function RootLayout() {
     fetchToken();
   }, []);
 
-  if (token === null) {
-    return <View>Token Does not Exists!</View>;
-  }
+  // if (token === null) {
+  //   return <View>Token Does not Exists!</View>;
+  // }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
