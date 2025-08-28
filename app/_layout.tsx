@@ -19,9 +19,9 @@ export default function RootLayout() {
     fetchToken();
   }, []);
 
-  if (token === null) {
-    return null;
-  }
+  // if (token === null) {
+  //   return null;
+  // }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
