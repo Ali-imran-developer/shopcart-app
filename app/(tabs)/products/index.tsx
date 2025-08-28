@@ -49,8 +49,7 @@ const Products = () => {
         numColumns={2} 
         columnWrapperStyle={{ justifyContent: "space-between", gap: 5, marginRight: 15 }}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.productCard} // onPress={() => router.push(`/products/${item?._id ?? item?.id}`)}
-          >
+          <TouchableOpacity style={styles.productCard} onPress={() => router.push(`/products/${item?._id}`as any)}>
             <Image
               source={ item?.image && item.image.trim() !== "" ? { uri: item.image } : require("@/assets/images/placeholder.jpg")}
               style={styles.productImage}
@@ -93,22 +92,6 @@ const Products = () => {
           />
         </TouchableOpacity>
       </View>
-
-      {/* <View style={styles.limitContainer}>
-        <Picker
-          selectedValue={limit}
-          style={styles.picker}
-          onValueChange={(value) => {
-            setLimit(value);
-            setPage(1);
-          }}
-        >
-          <Picker.Item label="5" value={5} />
-          <Picker.Item label="10" value={10} />
-          <Picker.Item label="20" value={20} />
-          <Picker.Item label="50" value={50} />
-        </Picker>
-      </View> */}
     </View>
   );
 };
@@ -202,7 +185,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "black",
   },
-    pageInfo: {
+  pageInfo: {
     fontSize: 14,
     fontWeight: "500",
     color: "#111827",
