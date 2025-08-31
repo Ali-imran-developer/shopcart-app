@@ -1,0 +1,225 @@
+import { StyleSheet } from "react-native";
+
+const orderStyles = StyleSheet.create({
+  listContent: {
+    backgroundColor: "#f9fafb",
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 30,
+  },
+  emptyListContent: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  screenTitle: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#111827",
+    marginBottom: 10,
+  },
+  screenSubtitle: {
+    fontSize: 16,
+    color: "#6b7280",
+    marginBottom: 24,
+  },
+  summaryContainer: {
+    marginBottom: 24,
+  },
+  summaryRow: {
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  summaryCard: {
+    width: '48%',
+    backgroundColor: "#ffffff",
+    padding: 20,
+    borderRadius: 16,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#f3f4f6",
+  },
+  summaryIconContainer: {
+    marginBottom: 12,
+  },
+  summaryTitle: {
+    fontSize: 14,
+    color: "#6b7280",
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  summaryValue: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: 'center',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 16,
+  },
+  orderCard: {
+    backgroundColor: "#ffffff",
+    padding: 20,
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#f3f4f6",
+  },
+  orderHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 16,
+  },
+  orderIdContainer: {
+    flex: 1,
+  },
+  orderId: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#111827",
+  },
+  orderIdSubtext: {
+    fontSize: 12,
+    color: "#9ca3af",
+    marginTop: 2,
+  },
+  statusContainer: {
+    alignItems: 'flex-end',
+  },
+  orderStatus: {
+    fontSize: 12,
+    fontWeight: "700",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    textAlign: 'center',
+    letterSpacing: 0.5,
+  },
+  orderDetails: {
+    marginBottom: 16,
+  },
+  detailRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  orderDetailText: {
+    fontSize: 14,
+    color: "#374151",
+    marginLeft: 8,
+    flex: 1,
+  },
+  paymentStatus: {
+    fontSize: 11,
+    fontWeight: "600",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    marginLeft: 8,
+  },
+  orderFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#f3f4f6",
+  },
+  viewDetailsBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+  viewDetailsBtnText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#2563eb",
+    marginRight: 4,
+  },
+  trackOrderBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#dcfce7",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  trackOrderBtnText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#10b981",
+    marginLeft: 4,
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 60,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#111827',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  emptySubtitle: {
+    fontSize: 16,
+    color: '#6b7280',
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#ffffff",
+    borderTopWidth: 1,
+    borderTopColor: "#f3f4f6",
+  },
+  paginationBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  paginationBtnDisabled: {
+    opacity: 0.5,
+  },
+  paginationBtnText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#2563eb",
+    marginHorizontal: 4,
+  },
+  paginationBtnTextDisabled: {
+    color: "#9ca3af",
+  },
+  pageInfoContainer: {
+    alignItems: 'center',
+  },
+  pageInfo: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#111827",
+  },
+  totalInfo: {
+    fontSize: 12,
+    color: "#6b7280",
+    marginTop: 2,
+  },
+});
+
+export default orderStyles;

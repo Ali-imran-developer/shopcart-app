@@ -1,8 +1,11 @@
 import OrdersController from "@/app/api/controllers/ordersController";
+import { setOrders } from "@/store/slices/orders-slice";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 
 export const useOrders = () => {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [ordersData, setOrdersData] = useState<any>({});
 
@@ -10,7 +13,11 @@ export const useOrders = () => {
     try {
       setIsLoading(true);
       const response = await OrdersController.getAllOrders(queryParams);
-      setOrdersData(response);
+      dispatch(setOrders({
+        orders: response?.orders ?? [],
+        totalOrders: response?.totalOrders ?? 0,
+        totalPages: response?.totalPages ?? 0,
+      }));
       return response;
     } catch (error: { message: string } | any) {
       console.log("@Error", error);

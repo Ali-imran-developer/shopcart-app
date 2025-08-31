@@ -100,7 +100,6 @@ export function useAuth() {
     try {
       setLoading(true);
       const response = await AuthControllers.dashboardApi();
-      console.log(response);
       setDashboardData(response);
       return response;
     } catch (err: any) {

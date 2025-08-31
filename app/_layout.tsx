@@ -1,12 +1,14 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Toast from 'react-native-toast-message';
-import { useAsyncStorage } from '@/hooks/useSecureStorage';
-import { useEffect, useState } from 'react';
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import "react-native-reanimated";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
+import { useAsyncStorage } from "@/hooks/useSecureStorage";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "@/store";
 
 export default function RootLayout() {
   const { getValue } = useAsyncStorage<string>();
@@ -32,29 +34,31 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        <View style={styles.container}>
-          <StatusBar style="dark" translucent />
-          <Stack
-            screenOptions={{
-              headerStyle: { backgroundColor: "#fff" },
-              headerTintColor: "#000",
-              headerShown: false,
-              headerTitleStyle: { fontWeight: "600" },
-              contentStyle: { backgroundColor: "#fff" },
-            }}
-          >
-            {!token || token === null ? (
-              <Stack.Screen name="(auth)" />
-            ) : (
-              <Stack.Screen name="(tabs)" />
-            )}
-          </Stack>
-          <Toast />
-        </View>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <View style={styles.container}>
+            <StatusBar style="dark" translucent />
+            <Stack
+              screenOptions={{
+                headerStyle: { backgroundColor: "#fff" },
+                headerTintColor: "#000",
+                headerShown: false,
+                headerTitleStyle: { fontWeight: "600" },
+                contentStyle: { backgroundColor: "#fff" },
+              }}
+            >
+              {!token || token === null ? (
+                <Stack.Screen name="(auth)" />
+              ) : (
+                <Stack.Screen name="(tabs)" />
+              )}
+            </Stack>
+            <Toast />
+          </View>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </Provider>
   );
 }
 

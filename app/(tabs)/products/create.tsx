@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
   ScrollView,
   Switch,
   ActivityIndicator,
@@ -14,9 +13,10 @@ import { Formik } from "formik";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 import { useProducts } from "@/hooks/useProducts";
-import * as ImagePicker from "expo-image-picker";
 import { CreateProductSchema } from "@/validators/products-schema";
 import { categories, subCategories } from "@/data/categories";
+import pickImage from "@/hooks/use-image-picker";
+import createProductStyles from "@/styles/products/create-products";
 
 export default function CreateProductScreen() {
   const navigation = useNavigation();
@@ -42,23 +42,9 @@ export default function CreateProductScreen() {
     }
   };
 
-  const pickImage = async (setFieldValue: any) => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"],
-      base64: true,
-      quality: 0.7,
-    });
-    if (!result.canceled && result.assets && result.assets.length > 0) {
-      const asset = result.assets[0];
-      const mimeType = asset.mimeType || "image/jpeg";
-      const base64Img = `data:${mimeType};base64,${asset.base64}`;
-      setFieldValue("image", base64Img);
-    }
-  };
-
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Create Product</Text>
+    <ScrollView style={createProductStyles.container}>
+      <Text style={createProductStyles.title}>Create Product</Text>
 
       <Formik
         initialValues={initialValues}
@@ -74,22 +60,22 @@ export default function CreateProductScreen() {
           touched,
           setFieldValue,
         }) => (
-          <View style={styles.form}>
+          <View style={createProductStyles.form}>
             {/* Name */}
-            <Text style={styles.label}>Title</Text>
+            <Text style={createProductStyles.label}>Title</Text>
             <TextInput
-              style={styles.input}
+              style={createProductStyles.input}
               placeholder="Product Name"
               onChangeText={handleChange("name")}
               onBlur={handleBlur("name")}
               value={values.name}
             />
             {errors.name && touched.name && (
-              <Text style={styles.error}>{errors.name}</Text>
+              <Text style={createProductStyles.error}>{errors.name}</Text>
             )}
 
-            <Text style={styles.label}>Category</Text>
-            <View style={styles.category}>
+            <Text style={createProductStyles.label}>Category</Text>
+            <View style={createProductStyles.category}>
               <Picker
                 selectedValue={values.category}
                 onValueChange={(val) => {
@@ -104,11 +90,11 @@ export default function CreateProductScreen() {
               </Picker>
             </View>
             {errors.category && touched.category && (
-              <Text style={styles.error}>{errors.category}</Text>
+              <Text style={createProductStyles.error}>{errors.category}</Text>
             )}
 
-            <Text style={styles.label}>SubCategory</Text>
-            <View style={styles.category}>
+            <Text style={createProductStyles.label}>SubCategory</Text>
+            <View style={createProductStyles.category}>
               <Picker
                 selectedValue={values.subCategory}
                 enabled={!!values.category}
@@ -122,13 +108,13 @@ export default function CreateProductScreen() {
               </Picker>
             </View>
             {errors.subCategory && touched.subCategory && (
-              <Text style={styles.error}>{errors.subCategory}</Text>
+              <Text style={createProductStyles.error}>{errors.subCategory}</Text>
             )}
 
             {/* Description */}
-            <Text style={styles.label}>Description</Text>
+            <Text style={createProductStyles.label}>Description</Text>
             <TextInput
-              style={[styles.input, styles.textarea]}
+              style={[createProductStyles.input, createProductStyles.textarea]}
               placeholder="Description"
               multiline
               onChangeText={handleChange("description")}
@@ -137,9 +123,9 @@ export default function CreateProductScreen() {
             />
 
             {/* Price */}
-            <Text style={styles.label}>Price</Text>
+            <Text style={createProductStyles.label}>Price</Text>
             <TextInput
-              style={styles.input}
+              style={createProductStyles.input}
               placeholder="Price"
               keyboardType="numeric"
               onChangeText={handleChange("price")}
@@ -147,13 +133,13 @@ export default function CreateProductScreen() {
               value={String(values.price)}
             />
             {errors.price && touched.price && (
-              <Text style={styles.error}>{errors.price}</Text>
+              <Text style={createProductStyles.error}>{errors.price}</Text>
             )}
 
             {/* Stock */}
-            <Text style={styles.label}>Stock</Text>
+            <Text style={createProductStyles.label}>Stock</Text>
             <TextInput
-              style={styles.input}
+              style={createProductStyles.input}
               placeholder="Stock"
               keyboardType="numeric"
               onChangeText={handleChange("stock")}
@@ -161,11 +147,11 @@ export default function CreateProductScreen() {
               value={String(values.stock)}
             />
             {errors.stock && touched.stock && (
-              <Text style={styles.error}>{errors.stock}</Text>
+              <Text style={createProductStyles.error}>{errors.stock}</Text>
             )}
 
-            <View style={styles.switchRow}>
-              <Text style={styles.status}>
+            <View style={createProductStyles.switchRow}>
+              <Text style={createProductStyles.status}>
                 Status: {values.status === "active" ? "Active" : "Inactive"}
               </Text>
               <Switch
@@ -176,39 +162,32 @@ export default function CreateProductScreen() {
               />
             </View>
 
-            <Text style={styles.label}>Upload Image</Text>
-            <TouchableOpacity style={styles.uploadBox} onPress={() => pickImage(setFieldValue)}>
+            <Text style={createProductStyles.label}>Upload Image</Text>
+            <TouchableOpacity style={createProductStyles.uploadBox} onPress={() => pickImage(setFieldValue)}>
               {values.image ? (
-                <View style={styles.imagePreviewRow}>
-                  <Image source={{ uri: values.image }} style={styles.imagePreview} />
-                  <TouchableOpacity onPress={() => setFieldValue("image", "")} style={styles.removeBtn}>
+                <View style={createProductStyles.imagePreviewRow}>
+                  <Image source={{ uri: values.image }} style={createProductStyles.imagePreview} />
+                  <TouchableOpacity onPress={() => setFieldValue("image", "")} style={createProductStyles.removeBtn}>
                     <Text style={{ color: "red" }}>X</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
-                <Text style={styles.uploadText}>Tap to select an image</Text>
+                <Text style={createProductStyles.uploadText}>Tap to select an image</Text>
               )}
             </TouchableOpacity>
             {errors.image && touched.image && (
-              <Text style={styles.error}>{errors.image}</Text>
+              <Text style={createProductStyles.error}>{errors.image}</Text>
             )}
 
-            <View style={styles.actions}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancel]}
-                onPress={() => navigation.goBack()}
-              >
-                <Text style={styles.btnText}>Cancel</Text>
+            <View style={createProductStyles.actions}>
+              <TouchableOpacity style={[createProductStyles.button, createProductStyles.cancel]} onPress={() => navigation.goBack()}>
+                <Text style={createProductStyles.btnText}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.submitButton, styles.submit]}
-                onPress={handleSubmit as any}
-                disabled={isLoading}
-              >
+              <TouchableOpacity style={[createProductStyles.submitButton, createProductStyles.submit]} onPress={handleSubmit as any} disabled={isLoading}>
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
-                  <Text style={styles.btnText}>Create Product</Text>
+                  <Text style={createProductStyles.btnText}>Create Product</Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -218,157 +197,3 @@ export default function CreateProductScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: "#f9fafb", 
-    padding: 20 
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    marginBottom: 24,
-    color: "#1f2937",
-    textAlign: "center",
-  },
-  form: { gap: 20 },
-  label: { 
-    fontWeight: "600", 
-    fontSize: 15, 
-    // marginBottom: 6,
-    color: "#374151" 
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
-    borderRadius: 10,
-    padding: 14,
-    fontSize: 15,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  textarea: { 
-    height: 100, 
-    textAlignVertical: "top" 
-  },
-  error: { 
-    fontSize: 13, 
-    color: "#dc2626", 
-    marginTop: -10,
-  },
-  category: {
-    borderWidth: 1,
-    borderColor: "#e5e7eb",
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  switchRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  status: { 
-    fontWeight: "600", 
-    fontSize: 16, 
-    color: "#374151" 
-  },
-  uploadBox: {
-    borderWidth: 2,
-    borderStyle: "dashed",
-    borderColor: "#9ca3af",
-    borderRadius: 12,
-    height: 150,
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f3f4f6",
-  },
-  uploadText: { 
-    color: "#6b7280", 
-    fontSize: 14, 
-    fontWeight: "500" 
-  },
-  imagePreviewRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-    paddingHorizontal: 10,
-    justifyContent: "space-between",
-  },
-  imagePreview: { 
-    width: 80, 
-    height: 80, 
-    borderRadius: 12, 
-    borderWidth: 1, 
-    borderColor: "#e5e7eb" 
-  },
-  removeBtn: {
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#ef4444",
-    backgroundColor: "#fee2e2",
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 30,
-    marginBottom: 30,
-    gap: 14,
-  },
-  button: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  submitButton: {
-    flex: 1.2,
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  cancel: { backgroundColor: "#6b7280" },
-  submit: { backgroundColor: "#2563eb" },
-  btnText: { 
-    color: "#fff", 
-    fontWeight: "600", 
-    fontSize: 15 
-  },
-});
-
