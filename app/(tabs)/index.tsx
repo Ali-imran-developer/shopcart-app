@@ -5,7 +5,6 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
@@ -14,10 +13,14 @@ import { LineChart, BarChart } from 'react-native-chart-kit';
 import { useAuth } from '@/hooks/useAuth';
 import { ensureArray, ensureObject } from '@/hooks/useFormater';
 import { router } from 'expo-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import dashboardStyles from '@/styles/dashboard';
 
 const { width } = Dimensions.get('window');
 const Dashboard = () => {
-  const { dashboardData, handledashboardData, loading } = useAuth();
+  const { handledashboardData, loading } = useAuth();
+  const { dashboardData } = useSelector((state: RootState) => state.Dashboard);
 
   useEffect(() => {
     handledashboardData();
@@ -25,13 +28,13 @@ const Dashboard = () => {
   }, [])
 
   const StatCard = ({ iconName, title, value, percentage, colors }: any) => (
-    <View style={[styles.statCard, { backgroundColor: colors.bg }]}>
-      <View style={styles.statCardHeader}>
-        <View style={[styles.iconContainer, { backgroundColor: colors.icon }]}>
+    <View style={[dashboardStyles.statCard, { backgroundColor: colors.bg }]}>
+      <View style={dashboardStyles.statCardHeader}>
+        <View style={[dashboardStyles.iconContainer, { backgroundColor: colors.icon }]}>
           <Feather name={iconName} size={20} color="white" />
         </View>
         <View style={[
-          styles.percentageContainer,
+          dashboardStyles.percentageContainer,
           { backgroundColor: percentage >= 0 ? '#dcfce7' : '#fee2e2' }
         ]}>
           <Feather 
@@ -40,7 +43,7 @@ const Dashboard = () => {
             color={percentage >= 0 ? '#16a34a' : '#dc2626'} 
           />
           <Text style={[
-            styles.percentageText,
+            dashboardStyles.percentageText,
             { color: percentage >= 0 ? '#16a34a' : '#dc2626' }
           ]}>
             {Math.abs(percentage)}%
@@ -48,43 +51,43 @@ const Dashboard = () => {
         </View>
       </View>
       
-      <View style={styles.statCardContent}>
-        <Text style={styles.statValue}>{value.toLocaleString()}</Text>
-        <Text style={styles.statTitle}>{title}</Text>
+      <View style={dashboardStyles.statCardContent}>
+        <Text style={dashboardStyles.statValue}>{value.toLocaleString()}</Text>
+        <Text style={dashboardStyles.statTitle}>{title}</Text>
       </View>
     </View>
   );
 
   const ProductCard = ({ product, totalSold }: any) => (
-    <View style={styles.productCard}>
-        <View style={styles.productContent}>
-          <View style={styles.productImageContainer}>
+    <View style={dashboardStyles.productCard}>
+        <View style={dashboardStyles.productContent}>
+          <View style={dashboardStyles.productImageContainer}>
             <Image 
               source={{ uri: product.image }} 
-              style={styles.productImage}
+              style={dashboardStyles.productImage}
               resizeMode="cover"
             />
-            <View style={styles.productBadge}>
+            <View style={dashboardStyles.productBadge}>
               <Feather name="star" size={8} color="white" />
             </View>
           </View>
           
-          <View style={styles.productInfo}>
-            <View style={styles.productHeader}>
-              <Text style={styles.productName} numberOfLines={2}>{product.name}</Text>
-              <Text style={styles.productCategory}>{product.category}</Text>
+          <View style={dashboardStyles.productInfo}>
+            <View style={dashboardStyles.productHeader}>
+              <Text style={dashboardStyles.productName} numberOfLines={2}>{product.name}</Text>
+              <Text style={dashboardStyles.productCategory}>{product.category}</Text>
             </View>
             
-            <View style={styles.productFooter}>
-              <View style={styles.productDetails}>
-                <Text style={styles.productPrice}>${product.price}</Text>
-                <View style={styles.stockContainer}>
+            <View style={dashboardStyles.productFooter}>
+              <View style={dashboardStyles.productDetails}>
+                <Text style={dashboardStyles.productPrice}>${product.price}</Text>
+                <View style={dashboardStyles.stockContainer}>
                   <Feather name="package" size={10} color="#6b7280" />
-                  <Text style={styles.stockText}>{product.stock}</Text>
+                  <Text style={dashboardStyles.stockText}>{product.stock}</Text>
                 </View>
               </View>
-              <View style={styles.soldBadge}>
-                <Text style={styles.soldText}>{totalSold} sold</Text>
+              <View style={dashboardStyles.soldBadge}>
+                <Text style={dashboardStyles.soldText}>{totalSold} sold</Text>
               </View>
             </View>
           </View>
@@ -93,14 +96,14 @@ const Dashboard = () => {
   );
 
   const LoadingCard = () => (
-    <View style={styles.loadingCard}>
-      <View style={styles.loadingHeader}>
-        <View style={styles.loadingIcon} />
-        <View style={styles.loadingPercentage} />
+    <View style={dashboardStyles.loadingCard}>
+      <View style={dashboardStyles.loadingHeader}>
+        <View style={dashboardStyles.loadingIcon} />
+        <View style={dashboardStyles.loadingPercentage} />
       </View>
-      <View style={styles.loadingContent}>
-        <View style={styles.loadingValue} />
-        <View style={styles.loadingTitle} />
+      <View style={dashboardStyles.loadingContent}>
+        <View style={dashboardStyles.loadingValue} />
+        <View style={dashboardStyles.loadingTitle} />
       </View>
     </View>
   );
@@ -131,41 +134,41 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.content}>
+      <ScrollView style={dashboardStyles.container}>
+        <View style={dashboardStyles.content}>
           {/* Header */}
-          <View style={styles.header}>
+          <View style={dashboardStyles.header}>
             <View>
-              <View style={styles.loadingTitle} />
-              <View style={styles.loadingSubtitle} />
+              <View style={dashboardStyles.loadingTitle} />
+              <View style={dashboardStyles.loadingSubtitle} />
             </View>
-            <View style={styles.loadingHeaderIcon} />
+            <View style={dashboardStyles.loadingHeaderIcon} />
           </View>
 
           {/* Stats Cards */}
-          <View style={styles.statsContainer}>
+          <View style={dashboardStyles.statsContainer}>
             <LoadingCard />
             <LoadingCard />
             <LoadingCard />
           </View>
 
           {/* Loading indicator */}
-          <ActivityIndicator size="large" color="#8b5cf6" style={styles.loader} />
+          <ActivityIndicator size="large" color="#8b5cf6" style={dashboardStyles.loader} />
         </View>
       </ScrollView>
     );
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.content}>
+    <ScrollView style={dashboardStyles.container} showsVerticalScrollIndicator={false}>
+      <View style={dashboardStyles.content}>
         {/* Header */}
-        <View style={styles.header}>
+        <View style={dashboardStyles.header}>
           <View>
-            <Text style={styles.headerTitle}>Dashboard</Text>
-            <View style={styles.dateContainer}>
+            <Text style={dashboardStyles.headerTitle}>Dashboard</Text>
+            <View style={dashboardStyles.dateContainer}>
               <Feather name="calendar" size={12} color="#6b7280" />
-              <Text style={styles.dateText}>
+              <Text style={dashboardStyles.dateText}>
                 {new Date().toLocaleDateString('en-US', { 
                   weekday: 'long', 
                   year: 'numeric', 
@@ -175,13 +178,13 @@ const Dashboard = () => {
               </Text>
             </View>
           </View>
-          <View style={styles.headerIcon}>
+          <View style={dashboardStyles.headerIcon}>
             <Feather name="bar-chart-2" size={16} color="white" />
           </View>
         </View>
 
         {/* Quick Stats */}
-        <View style={styles.statsContainer}>
+        <View style={dashboardStyles.statsContainer}>
           <StatCard
             iconName="shopping-cart"
             title="New Orders Today"
@@ -217,12 +220,12 @@ const Dashboard = () => {
         </View>
 
         {/* Charts Section */}
-        <View style={styles.chartsSection}>
-          <Text style={styles.sectionTitle}>Analytics Overview</Text>
+        <View style={dashboardStyles.chartsSection}>
+          <Text style={dashboardStyles.sectionTitle}>Analytics Overview</Text>
           
           {/* Bar Chart */}
-          <View style={styles.chartContainer}>
-            <Text style={styles.chartTitle}>Current Stats</Text>
+          <View style={dashboardStyles.chartContainer}>
+            <Text style={dashboardStyles.chartTitle}>Current Stats</Text>
             <BarChart
               data={chartData}
               width={width - 48}
@@ -243,12 +246,12 @@ const Dashboard = () => {
               }}
               yAxisLabel=""
               yAxisSuffix=""
-              style={styles.chart}
+              style={dashboardStyles.chart}
             />
           </View>
 
-          <View style={styles.chartContainer}>
-            <Text style={styles.chartTitle}>Monthly Trend</Text>
+          <View style={dashboardStyles.chartContainer}>
+            <Text style={dashboardStyles.chartTitle}>Monthly Trend</Text>
             <LineChart
               data={lineChartData}
               width={width - 48}
@@ -269,21 +272,21 @@ const Dashboard = () => {
                 }
               }}
               bezier
-              style={styles.chart}
+              style={dashboardStyles.chart}
             />
           </View>
         </View>
 
-        <View style={styles.topProductsSection}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Top Products</Text>
-            <TouchableOpacity style={styles.viewAllButton} onPress={() => router.push("/(tabs)/products")}>
-              <Text style={styles.viewAllText}>View All</Text>
+        <View style={dashboardStyles.topProductsSection}>
+          <View style={dashboardStyles.sectionHeader}>
+            <Text style={dashboardStyles.sectionTitle}>Top Products</Text>
+            <TouchableOpacity style={dashboardStyles.viewAllButton} onPress={() => router.push("/(tabs)/products")}>
+              <Text style={dashboardStyles.viewAllText}>View All</Text>
               <Feather name="eye" size={12} color="#3b82f6" />
             </TouchableOpacity>
           </View>
           
-          <View style={styles.productsContainer}>
+          <View style={dashboardStyles.productsContainer}>
             {ensureArray(dashboardData?.topProducts)?.map((item: any, index: number) => (
               <ProductCard
                 key={item.product?._id ?? index}
@@ -296,334 +299,6 @@ const Dashboard = () => {
       </View>
     </ScrollView>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8fafc',
-  },
-  content: {
-    paddingHorizontal: 16,
-    paddingBottom: 32,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginTop: 20,
-    marginBottom: 32,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1f2937',
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 4,
-  },
-  dateText: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginLeft: 6,
-  },
-  headerIcon: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#8b5cf6',
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#8b5cf6',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  statsContainer: {
-    gap: 16,
-    marginBottom: 32,
-  },
-  statCard: {
-    padding: 20,
-    borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  statCardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  percentageContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  percentageText: {
-    fontSize: 10,
-    fontWeight: '600',
-    marginLeft: 4,
-  },
-  statCardContent: {
-    gap: 4,
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1f2937',
-  },
-  statTitle: {
-    fontSize: 12,
-    color: '#6b7280',
-    fontWeight: '500',
-  },
-  chartsSection: {
-    marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 16,
-  },
-  chartContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  chartTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 12,
-  },
-  chart: {
-    borderRadius: 16,
-  },
-  topProductsSection: {
-    marginBottom: 32,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  viewAllButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  viewAllText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#3b82f6',
-    marginRight: 4,
-  },
-  productsContainer: {
-    gap: 12,
-  },
-  productCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  productContent: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  productImageContainer: {
-    position: 'relative',
-    marginRight: 16,
-  },
-  productImage: {
-    width: 56,
-    height: 56,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#f3f4f6',
-  },
-  productBadge: {
-    position: 'absolute',
-    top: -6,
-    right: -6,
-    width: 20,
-    height: 20,
-    backgroundColor: '#8b5cf6',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  productInfo: {
-    flex: 1,
-    gap: 8,
-  },
-  productHeader: {
-    gap: 4,
-  },
-  productName: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#1f2937',
-    lineHeight: 16,
-  },
-  productCategory: {
-    fontSize: 10,
-    color: '#6b7280',
-  },
-  productFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  productDetails: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1f2937',
-  },
-  stockContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  stockText: {
-    fontSize: 10,
-    color: '#6b7280',
-  },
-  soldBadge: {
-    backgroundColor: '#3b82f6',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  soldText: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
-  quickActionsSection: {
-    marginBottom: 32,
-  },
-  actionsGrid: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  actionButton: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    gap: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  actionIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  actionText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#374151',
-  },
-  // Loading styles
-  loadingCard: {
-    backgroundColor: '#f3f4f6',
-    borderRadius: 16,
-    padding: 20,
-  },
-  loadingHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  loadingIcon: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#d1d5db',
-    borderRadius: 12,
-  },
-  loadingPercentage: {
-    width: 48,
-    height: 20,
-    backgroundColor: '#d1d5db',
-    borderRadius: 10,
-  },
-  loadingContent: {
-    gap: 8,
-  },
-  loadingValue: {
-    width: 60,
-    height: 24,
-    backgroundColor: '#d1d5db',
-    borderRadius: 4,
-  },
-  loadingTitle: {
-    width: 80,
-    height: 16,
-    backgroundColor: '#d1d5db',
-    borderRadius: 4,
-  },
-  loadingSubtitle: {
-    width: 120,
-    height: 16,
-    backgroundColor: '#d1d5db',
-    borderRadius: 4,
-    marginTop: 4,
-  },
-  loadingHeaderIcon: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#d1d5db',
-    borderRadius: 20,
-  },
-  loader: {
-    marginTop: 32,
-  },
-});
+}
 
 export default Dashboard;

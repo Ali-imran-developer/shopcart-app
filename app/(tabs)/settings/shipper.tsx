@@ -27,12 +27,11 @@ const fieldLabels: any = {
 };
 
 export default function ShipperSettings() {
-  const { fetchShippers, isLoading, addShipper } = useShipperData();
+  const { fetchShippers, isLoading, addShipper, updateShipper } = useShipperData();
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editingShipper, setEditingShipper] = useState<any>(null);
   const { shipper } = useSelector((state: RootState) => state.Shipper);
-  console.log(shipper);
 
   useEffect(() => {
     fetchShippers();
@@ -197,11 +196,11 @@ export default function ShipperSettings() {
                 try {
                   setLoading(true);
                   if (editingShipper) {
-                    // await updateShipper(editingShipper?._id, values);
+                    await updateShipper(values, editingShipper?._id);
+                    await fetchShippers();
                   } else {
                     await addShipper(values);
                   }
-                  // await addShipper(values);
                   resetForm();
                   setEditingShipper(null);
                   setModalVisible(false);

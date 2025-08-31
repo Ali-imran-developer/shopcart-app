@@ -8,6 +8,9 @@ export default {
     scheme: "shopcart",
     extra: {
       API_BASE_URL: process.env.API_BASE_URL,
+      eas: {
+        projectId: "a2b46acf-51f1-4921-858a-360f95978e7b",
+      },
     },
   },
 };

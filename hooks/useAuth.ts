@@ -2,6 +2,8 @@ import { useState } from "react";
 import Toast from "react-native-toast-message";
 import AuthControllers from "@/app/api/controllers/authController";
 import { useAsyncStorage } from "./useSecureStorage";
+import { useDispatch } from "react-redux";
+import { setDashboardData } from "@/store/slices/dashboard-slice";
 
 type LoginData = { email: string; password: string };
 type SignupData = { userName: string; email: string; password: string };
@@ -15,9 +17,9 @@ type UpdateProfileData = {
 };
 
 export function useAuth() {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [dashboardData, setDashboardData] = useState<any>({});
   const { setValue, getValue } = useAsyncStorage();
 
   const handleLogin = async (data: LoginData) => {
@@ -100,7 +102,7 @@ export function useAuth() {
     try {
       setLoading(true);
       const response = await AuthControllers.dashboardApi();
-      setDashboardData(response);
+      dispatch(setDashboardData({ dashboardData: response }));
       return response;
     } catch (err: any) {
       console.log(err);
@@ -118,7 +120,6 @@ export function useAuth() {
     handleUpdateUser,
     handledashboardData,
     handleForgetPassword,
-    dashboardData,
     loading,
     error,
   };

@@ -11,12 +11,7 @@ export default function AuthLayout() {
       <SafeAreaProvider>
         <View style={styles.container}>
           <StatusBar style="dark" translucent />
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: "#fff" },
-            }}
-          >
+          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#fff" }}}>
             <Stack.Screen name="login" />
             <Stack.Screen name="signup" />
           </Stack>
@@ -26,9 +21,4 @@ export default function AuthLayout() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
+const styles = StyleSheet.create({ container: { flex: 1, backgroundColor: "#fff" } });

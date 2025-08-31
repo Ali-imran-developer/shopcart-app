@@ -49,11 +49,10 @@ export const useShipperData = () => {
     }
   };
 
-  const updateShipper = useCallback(async (values: ShipperInfoType, id: String, callback?: (status: string, value?: any) => void) => {
+  const updateShipper = async (values: any, id: String) => {
     try {
       setIsLoading(true);
       const response = await ShipperInfoController.editShipperInfo(values, id);
-      callback?.("success", response);
       Toast.show({ type: "success", text1: response?.message });
     } catch (error: {message: string} | any) {
       console.error("Error updating shipper:", error);
@@ -61,7 +60,7 @@ export const useShipperData = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  };
 
   const deleteShipper = useCallback(async (shipperId: string, callback?: (status: string, value?: any) => void) => {
     try {
