@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import ShipperInfoController from "@/app/api/controllers/shipperController";
 import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
+import { setShippers } from "@/store/slices/shipper-slice";
 
 interface ShipperInfoType {
   _id?: string;
@@ -14,14 +16,18 @@ interface ShipperInfoType {
 }
 
 export const useShipperData = () => {
-  const [shippers, setShippers] = useState<any>({});
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchShippers = async (queryParams?: any) => {
     try {
       setIsLoading(true);
       const response = await ShipperInfoController.getAllShipperInfo(queryParams);
-      setShippers(response);
+      dispatch(setShippers({
+        shipper: response?.shipper ?? [],
+        totalShippers: response?.totalShippers ?? 0,
+        totalPages: response?.totalPages ?? 0,
+      }));
     } catch (error: {message: string} | any) {
       console.error("Error fetching shippers:", error);
       Toast.show({ text1: error?.message, type: "error" });
@@ -34,7 +40,6 @@ export const useShipperData = () => {
     try {
       setIsLoading(true);
       const response = await ShipperInfoController.addShipperInfo(values);
-      // setShippers((prev: any) => [...prev, response]);
       Toast.show({ type: "success", text1: response?.message });
     } catch (error: {message: string} | any) {
       console.error("Error adding shipper:", error);
@@ -48,7 +53,6 @@ export const useShipperData = () => {
     try {
       setIsLoading(true);
       const response = await ShipperInfoController.editShipperInfo(values, id);
-      setShippers((prev: any) => prev?.map((item: any) => (item._id === values._id ? response : item)));
       callback?.("success", response);
       Toast.show({ type: "success", text1: response?.message });
     } catch (error: {message: string} | any) {
@@ -63,7 +67,6 @@ export const useShipperData = () => {
     try {
       setIsLoading(true);
       const response = await ShipperInfoController.removeShipperInfo(shipperId);
-      setShippers((prev: any) => prev.filter((item: any) => item._id !== shipperId));
       Toast.show({ type: "success", text1: response?.message });
     } catch (error: {message: string} | any) {
       console.error("Error deleting shipper:", error);
@@ -74,7 +77,6 @@ export const useShipperData = () => {
   }, []);
 
   return {
-    shippers,
     isLoading,
     fetchShippers,
     addShipper,

@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { logout } from "@/utils/auth";
+import settingStyles from "@/styles/settings";
 
 export default function SettingsIndex() {
 
@@ -37,13 +38,6 @@ export default function SettingsIndex() {
       icon: "people-outline",
       onPress: () => router.push("/settings/shipper"),
     },
-    // {
-    //   key: "change-password",
-    //   title: "Change Password",
-    //   subtitle: "Update your account password",
-    //   icon: "key-outline",
-    //   onPress: () => router.push("/settings/change-password"),
-    // },
     {
       key: "about-app",
       title: "About the App",
@@ -83,76 +77,30 @@ export default function SettingsIndex() {
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.heading}>Settings</Text>
+    <View style={settingStyles.container}>
+      <View style={settingStyles.header}>
+        <Text style={settingStyles.heading}>Settings</Text>
       </View>
       {menuItems.map((item) => (
         <TouchableOpacity
           key={item.key}
-          style={[styles.row, item.danger && styles.dangerRow]}
+          style={[settingStyles.row, item.danger && settingStyles.dangerRow]}
           onPress={item.onPress}
         >
           <Ionicons
             name={item.icon as any}
             size={22}
             color={item.danger ? "#ef4444" : "#111827"}
-            style={styles.icon}
+            style={settingStyles.icon}
           />
-          <View style={styles.textContainer}>
-            <Text style={[styles.title, item.danger && styles.dangerText]}>
+          <View style={settingStyles.textContainer}>
+            <Text style={[settingStyles.title, item.danger && settingStyles.dangerText]}>
               {item.title}
             </Text>
-            <Text style={styles.subtitle}>{item.subtitle}</Text>
+            <Text style={settingStyles.subtitle}>{item.subtitle}</Text>
           </View>
         </TouchableOpacity>
       ))}
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#e5e7eb",
-  },
-  dangerRow: {
-    backgroundColor: "#fef2f2",
-  },
-  icon: {
-    marginRight: 16,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#111827",
-  },
-  subtitle: {
-    fontSize: 13,
-    color: "#6b7280",
-    marginTop: 2,
-  },
-  dangerText: {
-    color: "#ef4444",
-  },
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#e5e7eb",
-    backgroundColor: "#f9fafb",
-  },
-  heading: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: "#111827",
-  },
-});
+};

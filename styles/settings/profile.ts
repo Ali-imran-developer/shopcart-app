@@ -1,0 +1,72 @@
+import { StyleSheet } from "react-native";
+
+const profileStyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#f9fafb", padding: 16 },
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 20 },
+  headerTitle: { fontSize: 22, fontWeight: "700", color: "#111827" },
+  updateButton: { flexDirection: "row", alignItems: "center", backgroundColor: "#2563eb", paddingVertical: 8, paddingHorizontal: 14, borderRadius: 8 },
+  updateButtonText: { color: "#fff", fontWeight: "600", marginLeft: 4 },
+  avatarWrapper: { alignItems: "center", marginBottom: 24 },
+  avatar: { width: 120, height: 120, borderRadius: 60, backgroundColor: "#e5e7eb" },
+  card: { backgroundColor: "#fff", padding: 16, borderRadius: 12, marginBottom: 12, shadowColor: "#000", shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
+  cardLabel: { fontSize: 13, color: "#6b7280" },
+  cardValue: { fontSize: 16, fontWeight: "600", color: "#111827", marginTop: 4 },
+  modalOverlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center", padding: 20 },
+  modalContainer: { width: "100%", backgroundColor: "#fff", borderRadius: 16, padding: 20 },
+  modalTitle: { fontSize: 18, fontWeight: "700", marginBottom: 20, textAlign: "center", color: "#111827" },
+  imagePickerWrapper: { alignItems: "center", marginBottom: 20 },
+  avatarEditWrapper: { position: "relative" },
+  avatarEdit: { width: 110, height: 110, borderRadius: 55, borderWidth: 2, borderColor: "#e5e7eb" },
+  editIconWrapper: { position: "absolute", bottom: 0, right: 0, backgroundColor: "#2563eb", padding: 6, borderRadius: 20, borderWidth: 2, borderColor: "#fff" },
+  inputLabel: { fontSize: 14, color: "#374151", marginBottom: 6, fontWeight: "500" },
+  input: { borderWidth: 1, borderColor: "#d1d5db", borderRadius: 8, padding: 12, fontSize: 14, backgroundColor: "#f9fafb" },
+  error: { color: "red", fontSize: 12, marginTop: 4 },
+  modalButtons: { flexDirection: "row", justifyContent: "flex-end", marginTop: 16 },
+  modalBtn: { paddingVertical: 10, paddingHorizontal: 16, borderRadius: 8, marginLeft: 10 },
+  cancelBtn: { backgroundColor: "#f3f4f6" },
+  saveBtn: { backgroundColor: "#2563eb" },
+  modalBtnText: { fontWeight: "600", color: "#111827" },
+  modalBtnTextWhite: { fontWeight: "600", color: "#fff" },
+  uploadBox: {
+    borderWidth: 2,
+    borderStyle: "dashed",
+    borderColor: "#9ca3af",
+    borderRadius: 12,
+    height: 150,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f3f4f6",
+    marginBottom: 10,
+  },
+  imagePreviewRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
+  },
+  imagePreview: { 
+    width: 80, 
+    height: 80, 
+    borderRadius: 12, 
+    borderWidth: 1, 
+    borderColor: "#e5e7eb" 
+  },
+  removeBtn: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#ef4444",
+    backgroundColor: "#fee2e2",
+  },
+  uploadText: { 
+    color: "#6b7280", 
+    fontSize: 14, 
+    fontWeight: "500" 
+  },
+});
+
+export default profileStyles;
