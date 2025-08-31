@@ -95,11 +95,11 @@ export default function Login() {
                   <Text style={styles.errorText}>{errors.password}</Text>
                 )}
 
-                <View style={styles.forgetPasswordContainer}>
+                {/* <View style={styles.forgetPasswordContainer}>
                   <Link href="/forgot-password" style={styles.forgetPasswordLink}>
                     Forgot Password?
                   </Link>
-                </View>
+                </View> */}
 
                 <TouchableOpacity style={[styles.loginBtn, loading && { opacity: 0.7 }]}
                   onPress={handleSubmit as any} disabled={loading}
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 16,
     backgroundColor: "#fff",
-    marginBottom: 5,
+    marginBottom: 10,
   },
   passwordContainer: {
     flexDirection: "row",

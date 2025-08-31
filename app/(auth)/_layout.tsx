@@ -10,7 +10,7 @@ export default function AuthLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <View style={styles.container}>
-          <StatusBar style="dark" backgroundColor="#fff" />
+          <StatusBar style="dark" translucent />
           <Stack
             screenOptions={{
               headerShown: false,
