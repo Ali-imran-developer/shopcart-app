@@ -6,6 +6,9 @@ export default {
     slug: "new-shopcart",
     version: "1.0.0",
     scheme: "shopcart",
+    android: {
+      package: "com.new.shopcart",
+    },
     extra: {
       API_BASE_URL: process.env.API_BASE_URL,
       eas: {
