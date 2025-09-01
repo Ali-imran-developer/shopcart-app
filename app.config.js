@@ -7,7 +7,7 @@ export default {
     version: "1.0.0",
     scheme: "shopcart",
     android: {
-      package: "com.new.shopcart",
+      package: "com.aliimran.shopcart",
     },
     extra: {
       API_BASE_URL: process.env.API_BASE_URL,
